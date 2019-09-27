@@ -44,6 +44,9 @@ class _MedicamentoPageState extends State<MedicamentoPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    bool _lights = false;
+
     return WillPopScope(
       onWillPop: _requestPop,
       child: Scaffold(
@@ -82,12 +85,7 @@ class _MedicamentoPageState extends State<MedicamentoPage> {
                   ),
                 ),
                 onTap: (){
-                  ImagePicker.pickImage(source: ImageSource.camera).then((file){
-                    if(file == null) return;
-                    setState(() {
-                      _editedMedicamento.img = file.path;
-                    });
-                  });
+                  _showOptions(context);
                 },
               ),
               TextField(
@@ -119,12 +117,89 @@ class _MedicamentoPageState extends State<MedicamentoPage> {
                 },
                 keyboardType: TextInputType.phone,
               ),
+              SwitchListTile(
+                title: const Text('Uso Contínuo'),
+                value: _lights,
+                onChanged: (bool value) { setState(() { _lights = value; }); },
+                secondary: const Icon(Icons.assignment_late),
+              ),
+              SwitchListTile(
+                title: const Text('Uso Temporário'),
+                value: _lights,
+                onChanged: (bool value) { setState(() { _lights = value; }); },
+                secondary: const Icon(Icons.assignment_late),
+              ),
+
             ],
           ),
         ),
       ),
     );
   }
+
+  void _showOptions(BuildContext context){
+    showModalBottomSheet(
+        context: context,
+        builder: (context){
+          return BottomSheet(
+            onClosing: (){},
+            builder: (context){
+              return Container(
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text("Galeria",
+                          style: TextStyle(color: Colors.teal, fontSize: 20.0),
+                        ),
+                        onPressed: (){
+                          //launch("tel:${ads[index].phone}");
+                          ImagePicker.pickImage(source: ImageSource.gallery).then((file){
+                            if(file == null) return;
+                            setState(() {
+                              _editedMedicamento.img = file.path;
+                            });
+                          });
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text("Camera",
+                          style: TextStyle(color: Colors.teal, fontSize: 20.0),
+                        ),
+                        onPressed: (){
+                          ImagePicker.pickImage(source: ImageSource.camera).then((file){
+                            if(file == null) return;
+                            setState(() {
+                              _editedMedicamento.img = file.path;
+                            });
+                          });
+                          Navigator.pop(context);
+                        },
+                        /*onPressed: (){
+                          Navigator.pop(context);
+                          _showAdPage(ad: ads[index]);
+                        },*/
+
+                      ),
+                    ),
+
+                  ],
+                ),
+              );
+            },
+          );
+        }
+    );
+  }
+
+
 
   Future<bool> _requestPop(){
     if(_userEdited){

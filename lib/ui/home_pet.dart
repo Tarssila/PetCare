@@ -2,17 +2,18 @@ import 'dart:io';
 
 import 'package:agenda_contatos/helpers/pet_helper.dart';
 import 'package:agenda_contatos/ui/pet_page.dart';
+import 'package:agenda_contatos/ui/vacina_page.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 enum OrderOptions {orderaz, orderza}
 
-class HomePage extends StatefulWidget {
+class HomePet extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePetState createState() => _HomePetState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePetState extends State<HomePet> {
 
   PetHelper helper = PetHelper();
 
@@ -142,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                       padding: EdgeInsets.all(10.0),
                       child: FlatButton(
                         child: Text("Editar",
-                          style: TextStyle(color: Colors.deepOrange, fontSize: 20.0),
+                          style: TextStyle(color: Colors.deepOrange, fontSize: 20.0,),
                         ),
                         onPressed: (){
                           Navigator.pop(context);
@@ -163,6 +164,30 @@ class _HomePageState extends State<HomePage> {
                             pets.removeAt(index);
                             Navigator.pop(context);
                           });
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text("Vacinas",
+                          style: TextStyle(color: Colors.deepOrange, fontSize: 20.0),
+                        ),
+                        onPressed: (){
+                          VacinaPage();
+                          //Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text("Medicamentos",
+                          style: TextStyle(color: Colors.deepOrange, fontSize: 20.0),
+                        ),
+                        onPressed: (){
+                          VacinaPage();
+                          //Navigator.pop(context);
                         },
                       ),
                     ),

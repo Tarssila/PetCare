@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1023762974276",
+    "firebase_url": "https://pet-care-b1087.firebaseio.com",
+    "project_id": "pet-care-b1087",
+    "storage_bucket": "pet-care-b1087.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023762974276:android:0a190b73b7b62271ae1e11",
+        "android_client_info": {
+          "package_name": "br.com.ciolfi.agenda_contatos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1023762974276-9po80ftfu1q6795a1qrd55al7vkirqj7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBm9fTGPJfa6uBSDVuHKNWRmbLpcd1NAR0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1023762974276-9po80ftfu1q6795a1qrd55al7vkirqj7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -147,7 +147,6 @@ class CadastroPage extends StatelessWidget {
                   ),
                   onPressed: () {
                     /*if(_formKey.currentState.validate()){
-
                     }
 */                  },
                 ),

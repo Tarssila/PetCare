@@ -44,6 +44,9 @@ class _VacinaPageState extends State<VacinaPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    bool _lights = false;
+
     return WillPopScope(
       onWillPop: _requestPop,
       child: Scaffold(
@@ -82,12 +85,7 @@ class _VacinaPageState extends State<VacinaPage> {
                   ),
                 ),
                 onTap: (){
-                  ImagePicker.pickImage(source: ImageSource.camera).then((file){
-                    if(file == null) return;
-                    setState(() {
-                      _editedVacina.img = file.path;
-                    });
-                  });
+                  _showOptions(context);
                 },
               ),
               TextField(
@@ -103,28 +101,102 @@ class _VacinaPageState extends State<VacinaPage> {
               ),
               TextField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: "Email"),
+                decoration: InputDecoration(labelText: "Data"),
                 onChanged: (text){
                   _userEdited = true;
                   _editedVacina.email = text;
                 },
                 keyboardType: TextInputType.emailAddress,
               ),
-              TextField(
-                controller: _phoneController,
-                decoration: InputDecoration(labelText: "Phone"),
-                onChanged: (text){
-                  _userEdited = true;
-                  _editedVacina.phone = text;
-                },
-                keyboardType: TextInputType.phone,
+//              TextField(
+//                controller: _phoneController,
+//                decoration: InputDecoration(labelText: "Phone"),
+//                onChanged: (text){
+//                  _userEdited = true;
+//                  _editedVacina.phone = text;
+//                },
+//                keyboardType: TextInputType.phone,
+//              ),
+              SwitchListTile(
+                title: const Text('É necessário revacinar?'),
+                value: _lights,
+                onChanged: (bool value) { setState(() { _lights = value; }); },
+                secondary: const Icon(Icons.assignment_late),
               ),
+
             ],
+
           ),
         ),
       ),
     );
   }
+
+
+  void _showOptions(BuildContext context){
+    showModalBottomSheet(
+        context: context,
+        builder: (context){
+          return BottomSheet(
+            onClosing: (){},
+            builder: (context){
+              return Container(
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text("Galeria",
+                          style: TextStyle(color: Colors.teal, fontSize: 20.0),
+                        ),
+                        onPressed: (){
+                          //launch("tel:${ads[index].phone}");
+                          ImagePicker.pickImage(source: ImageSource.gallery).then((file){
+                            if(file == null) return;
+                            setState(() {
+                              _editedVacina.img = file.path;
+                            });
+                          });
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text("Camera",
+                          style: TextStyle(color: Colors.teal, fontSize: 20.0),
+                        ),
+                        onPressed: (){
+                          ImagePicker.pickImage(source: ImageSource.camera).then((file){
+                            if(file == null) return;
+                            setState(() {
+                              _editedVacina.img = file.path;
+                            });
+                          });
+                          Navigator.pop(context);
+                        },
+                        /*onPressed: (){
+                          Navigator.pop(context);
+                          _showAdPage(ad: ads[index]);
+                        },*/
+
+                      ),
+                    ),
+
+                  ],
+                ),
+              );
+            },
+          );
+        }
+    );
+  }
+
+
+
 
   Future<bool> _requestPop(){
     if(_userEdited){
