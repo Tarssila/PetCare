@@ -1,5 +1,9 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:intl/intl.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+
+
 
 import 'package:agenda_contatos/helpers/pet_helper.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +19,15 @@ class PetPage extends StatefulWidget {
   _PetPageState createState() => _PetPageState();
 }
 
+enum SingingCharacter { Femea, Macho }
+
+
+
 class _PetPageState extends State<PetPage> {
+
+  SingingCharacter _character = SingingCharacter.Femea;
+
+  final format = DateFormat("dd-MM-yyyy");
 
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -37,8 +49,8 @@ class _PetPageState extends State<PetPage> {
       _editedPet = Pet.fromMap(widget.pet.toMap());
 
       _nameController.text = _editedPet.name;
-      _emailController.text = _editedPet.email;
-      _phoneController.text = _editedPet.phone;
+//      _emailController.text = _editedPet.email;
+//      _phoneController.text = _editedPet.phone;
     }
   }
 
@@ -90,7 +102,7 @@ class _PetPageState extends State<PetPage> {
               TextField(
                 controller: _nameController,
                 focusNode: _nameFocus,
-                decoration: InputDecoration(labelText: "Nome"),
+                decoration: InputDecoration(labelText: "name"),
                 onChanged: (text){
                   _userEdited = true;
                   setState(() {
@@ -98,24 +110,47 @@ class _PetPageState extends State<PetPage> {
                   });
                 },
               ),
-              TextField(
-                controller: _emailController,
-                decoration: InputDecoration(labelText: "Email"),
-                onChanged: (text){
-                  _userEdited = true;
-                  _editedPet.email = text;
-                },
-                keyboardType: TextInputType.emailAddress,
+
+              new Text('Sexo', textAlign: TextAlign.left,),
+
+              RadioListTile<SingingCharacter>(
+                title: const Text('Femea'),
+                value: SingingCharacter.Femea,
+                groupValue: _character,
+                onChanged: (SingingCharacter value) { setState(() { _character = value; }); },
+              ),
+              RadioListTile<SingingCharacter>(
+                title: const Text('Macho'),
+                value: SingingCharacter.Macho,
+                groupValue: _character,
+                onChanged: (SingingCharacter value) { setState(() { _character = value; }); },
               ),
               TextField(
-                controller: _phoneController,
-                decoration: InputDecoration(labelText: "Phone"),
+                controller: _nameController,
+                focusNode: _nameFocus,
+                decoration: InputDecoration(labelText: "Peso"),
                 onChanged: (text){
                   _userEdited = true;
-                  _editedPet.phone = text;
+                  setState(() {
+                    _editedPet.name = text;
+                  });
                 },
-                keyboardType: TextInputType.phone,
               ),
+              new Text('Data Nascimento', textAlign: TextAlign.left,),
+              DateTimeField(
+                format: format,
+                onShowPicker: (context, currentValue) {
+                  return showDatePicker(
+                      context: context,
+                      firstDate: DateTime(1900),
+                      initialDate: currentValue ?? DateTime.now(),
+                      lastDate: DateTime(2100));
+                },
+              ),
+
+
+
+
             ],
           ),
         ),
@@ -187,6 +222,7 @@ class _PetPageState extends State<PetPage> {
   }
 
 
+
   Future<bool> _requestPop(){
     if(_userEdited){
       showDialog(context: context,
@@ -219,3 +255,5 @@ class _PetPageState extends State<PetPage> {
   }
 
 }
+
+

@@ -6,8 +6,8 @@ import 'package:sqflite/sqflite.dart';
 final String petTable = "petTable";
 final String idColumn = "idColumn";
 final String nameColumn = "nameColumn";
-final String emailColumn = "emailColumn";
-final String phoneColumn = "phoneColumn";
+final String pesoColumn = "pesoColumn";
+
 final String imgColumn = "imgColumn";
 
 class PetHelper {
@@ -35,8 +35,7 @@ class PetHelper {
 
     return await openDatabase(path, version: 1, onCreate: (Database db, int newerVersion) async {
       await db.execute(
-        "CREATE TABLE $petTable($idColumn INTEGER PRIMARY KEY, $nameColumn TEXT, $emailColumn TEXT,"
-            "$phoneColumn TEXT, $imgColumn TEXT)"
+        "CREATE TABLE $petTable($idColumn INTEGER PRIMARY KEY, $nameColumn TEXT, $imgColumn TEXT,)"
       );
     });
   }
@@ -50,7 +49,7 @@ class PetHelper {
   Future<Pet> getPet(int id) async {
     Database dbPet = await db;
     List<Map> maps = await dbPet.query(petTable,
-      columns: [idColumn, nameColumn, emailColumn, phoneColumn, imgColumn],
+      columns: [idColumn, nameColumn, imgColumn],
       where: "$idColumn = ?",
       whereArgs: [id]);
     if(maps.length > 0){
@@ -99,8 +98,6 @@ class Pet {
 
   int id;
   String name;
-  String email;
-  String phone;
   String img;
 
   Pet();
@@ -108,16 +105,14 @@ class Pet {
   Pet.fromMap(Map map){
     id = map[idColumn];
     name = map[nameColumn];
-    email = map[emailColumn];
-    phone = map[phoneColumn];
+
     img = map[imgColumn];
   }
 
   Map toMap() {
     Map<String, dynamic> map = {
       nameColumn: name,
-      emailColumn: email,
-      phoneColumn: phone,
+
       imgColumn: img
     };
     if(id != null){
@@ -128,7 +123,7 @@ class Pet {
 
   @override
   String toString() {
-    return "Pet(id: $id, name: $name, email: $email, phone: $phone, img: $img)";
+    return "Pet(id: $id, name: $name, img: $img)";
   }
 
 }

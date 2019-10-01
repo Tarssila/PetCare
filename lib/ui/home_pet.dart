@@ -96,12 +96,12 @@ class _HomePetState extends State<HomePet> {
                         style: TextStyle(fontSize: 22.0,
                             fontWeight: FontWeight.bold),
                       ),
-                      Text(pets[index].email ?? "",
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      Text(pets[index].phone ?? "",
-                        style: TextStyle(fontSize: 18.0),
-                      )
+//                      Text(pets[index].email ?? "",
+//                        style: TextStyle(fontSize: 18.0),
+//                      ),
+//                      Text(pets[index].phone ?? "",
+//                        style: TextStyle(fontSize: 18.0),
+//                      )
                     ],
                   ),
                 )
@@ -127,18 +127,6 @@ class _HomePetState extends State<HomePet> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: FlatButton(
-                        child: Text("Ligar",
-                          style: TextStyle(color: Colors.deepOrange, fontSize: 20.0),
-                        ),
-                        onPressed: (){
-                          launch("tel:${pets[index].phone}");
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
                     Padding(
                       padding: EdgeInsets.all(10.0),
                       child: FlatButton(

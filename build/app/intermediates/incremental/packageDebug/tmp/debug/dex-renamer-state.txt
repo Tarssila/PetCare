@@ -1,4 +1,4 @@
-#Thu Sep 26 20:34:15 BOT 2019
+#Tue Oct 01 13:21:49 BOT 2019
 base.0=C\:\\Users\\Cliente\\Downloads\\PET CARE SEM LOGIN\\pet_care\\build\\app\\intermediates\\transforms\\dexMerger\\debug\\0
 path.0=classes.dex
 renamed.0=classes.dex
